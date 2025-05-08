@@ -109,12 +109,6 @@ def vessel_counts():
         counter.update(chunk["MMSI"])
     return {m for m, c in counter.items() if c >= 100}
 
-def noise_filter(df, good_mmsi):
-    df = df[df["MMSI"].isin(good_mmsi)]
-    # lat/lon sanity
-    df = df[(df["Latitude"].between(-90, 90)) & (df["Longitude"].between(-180, 180))]
-    return df
-
 def filter_worker(slice_ids, good_mmsi):
     client = get_client()
     src  = client[DB_NAME][RAW_COLL]
