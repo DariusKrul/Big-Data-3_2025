@@ -123,10 +123,12 @@ def filter_worker(slice_ids, good_mmsi):
     bulk = []
     for _id in slice_ids:
         doc = src.find_one({"_id": _id})
-        if doc and doc["MMSI"] in good_mmsi:
-            bulk.append(doc)
-    if bulk:
-        dest.insert_many(bulk, ordered=False)
+        if not doc or doc["MMSI"] not in good_mmsi:
+            continue
+        lat, lon = doc["Latitude"], doc["Longitude"]
+        if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+            continue          # bad coordinates
+        bulk.append(doc)
 
 def build_clean_parallel(threads):
     client   = get_client()
