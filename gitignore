@@ -1,0 +1,22 @@
+# Data
+data/
+*.csv
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output
+*.png
+!docs/*.png
